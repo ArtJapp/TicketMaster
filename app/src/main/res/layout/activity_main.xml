@@ -4,9 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    android:theme="@style/Theme.AppCompat.Light"
+    tools:context=".ui.activities.MainActivity">
 
-
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Change Country"
+        android:id="@+id/btnCountry"/>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

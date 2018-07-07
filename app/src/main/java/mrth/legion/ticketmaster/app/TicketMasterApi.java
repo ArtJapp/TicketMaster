@@ -1,8 +1,6 @@
 package mrth.legion.ticketmaster.app;
 
-import android.database.Observable;
-
-import mrth.legion.ticketmaster.Models.Result;
+import mrth.legion.ticketmaster.models.Result;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
