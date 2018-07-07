@@ -6,38 +6,16 @@ import com.google.gson.annotations.SerializedName;
 
 public class Attraction {
 
-    @SerializedName("id")
+    @SerializedName("href")
     @Expose
-    private Integer id;
-    @SerializedName("name")
-    @Expose
-    private String name;
-    @SerializedName("url")
-    @Expose
-    private String url;
+    private String href;
 
-    public Integer getId() {
-        return id;
+    public String getHref() {
+        return href;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
+    public void setHref(String href) {
+        this.href = href;
     }
 
 }

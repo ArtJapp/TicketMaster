@@ -7,60 +7,67 @@ import com.google.gson.annotations.SerializedName;
 
 public class Event {
 
-    @SerializedName("id")
-    @Expose
-    private String id;
-    @SerializedName("domain_id")
-    @Expose
-    private String domainId;
     @SerializedName("name")
     @Expose
     private String name;
+    @SerializedName("type")
+    @Expose
+    private String type;
+    @SerializedName("id")
+    @Expose
+    private String id;
+    @SerializedName("test")
+    @Expose
+    private Boolean test;
     @SerializedName("url")
     @Expose
     private String url;
-    @SerializedName("externalUrl")
+    @SerializedName("locale")
     @Expose
-    private Boolean externalUrl;
-    @SerializedName("eventdate")
+    private String locale;
+    @SerializedName("images")
     @Expose
-    private Eventdate eventdate;
-    @SerializedName("day_of_week")
+    private List<Image> images = null;
+    @SerializedName("sales")
     @Expose
-    private String dayOfWeek;
-    @SerializedName("timezone")
+    private Sales sales;
+    @SerializedName("dates")
     @Expose
-    private String timezone;
-    @SerializedName("localeventdate")
+    private Dates dates;
+    @SerializedName("classifications")
     @Expose
-    private String localeventdate;
-    @SerializedName("onsale")
+    private List<Classification> classifications = null;
+    @SerializedName("promoter")
     @Expose
-    private Onsale onsale;
-    @SerializedName("offsale")
+    private Promoter promoter;
+    @SerializedName("promoters")
     @Expose
-    private Offsale offsale;
-    @SerializedName("dooropening")
+    private List<Promoter_> promoters = null;
+    @SerializedName("priceRanges")
     @Expose
-    private Dooropening dooropening;
-    @SerializedName("properties")
+    private List<PriceRange> priceRanges = null;
+    @SerializedName("_links")
     @Expose
-    private Properties properties;
-    @SerializedName("venue")
+    private Links links;
+    @SerializedName("_embedded")
     @Expose
-    private Venue venue;
-    @SerializedName("categories")
-    @Expose
-    private List<Category> categories = null;
-    @SerializedName("attractions")
-    @Expose
-    private List<Attraction> attractions = null;
-    @SerializedName("price_ranges")
-    @Expose
-    private PriceRanges priceRanges;
-    @SerializedName("currency")
-    @Expose
-    private String currency;
+    private Embedded_ embedded;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public String getId() {
         return id;
@@ -70,20 +77,12 @@ public class Event {
         this.id = id;
     }
 
-    public String getDomainId() {
-        return domainId;
+    public Boolean getTest() {
+        return test;
     }
 
-    public void setDomainId(String domainId) {
-        this.domainId = domainId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setTest(Boolean test) {
+        this.test = test;
     }
 
     public String getUrl() {
@@ -94,116 +93,84 @@ public class Event {
         this.url = url;
     }
 
-    public Boolean getExternalUrl() {
-        return externalUrl;
+    public String getLocale() {
+        return locale;
     }
 
-    public void setExternalUrl(Boolean externalUrl) {
-        this.externalUrl = externalUrl;
+    public void setLocale(String locale) {
+        this.locale = locale;
     }
 
-    public Eventdate getEventdate() {
-        return eventdate;
+    public List<Image> getImages() {
+        return images;
     }
 
-    public void setEventdate(Eventdate eventdate) {
-        this.eventdate = eventdate;
+    public void setImages(List<Image> images) {
+        this.images = images;
     }
 
-    public String getDayOfWeek() {
-        return dayOfWeek;
+    public Sales getSales() {
+        return sales;
     }
 
-    public void setDayOfWeek(String dayOfWeek) {
-        this.dayOfWeek = dayOfWeek;
+    public void setSales(Sales sales) {
+        this.sales = sales;
     }
 
-    public String getTimezone() {
-        return timezone;
+    public Dates getDates() {
+        return dates;
     }
 
-    public void setTimezone(String timezone) {
-        this.timezone = timezone;
+    public void setDates(Dates dates) {
+        this.dates = dates;
     }
 
-    public String getLocaleventdate() {
-        return localeventdate;
+    public List<Classification> getClassifications() {
+        return classifications;
     }
 
-    public void setLocaleventdate(String localeventdate) {
-        this.localeventdate = localeventdate;
+    public void setClassifications(List<Classification> classifications) {
+        this.classifications = classifications;
     }
 
-    public Onsale getOnsale() {
-        return onsale;
+    public Promoter getPromoter() {
+        return promoter;
     }
 
-    public void setOnsale(Onsale onsale) {
-        this.onsale = onsale;
+    public void setPromoter(Promoter promoter) {
+        this.promoter = promoter;
     }
 
-    public Offsale getOffsale() {
-        return offsale;
+    public List<Promoter_> getPromoters() {
+        return promoters;
     }
 
-    public void setOffsale(Offsale offsale) {
-        this.offsale = offsale;
+    public void setPromoters(List<Promoter_> promoters) {
+        this.promoters = promoters;
     }
 
-    public Dooropening getDooropening() {
-        return dooropening;
-    }
-
-    public void setDooropening(Dooropening dooropening) {
-        this.dooropening = dooropening;
-    }
-
-    public Properties getProperties() {
-        return properties;
-    }
-
-    public void setProperties(Properties properties) {
-        this.properties = properties;
-    }
-
-    public Venue getVenue() {
-        return venue;
-    }
-
-    public void setVenue(Venue venue) {
-        this.venue = venue;
-    }
-
-    public List<Category> getCategories() {
-        return categories;
-    }
-
-    public void setCategories(List<Category> categories) {
-        this.categories = categories;
-    }
-
-    public List<Attraction> getAttractions() {
-        return attractions;
-    }
-
-    public void setAttractions(List<Attraction> attractions) {
-        this.attractions = attractions;
-    }
-
-    public PriceRanges getPriceRanges() {
+    public List<PriceRange> getPriceRanges() {
         return priceRanges;
     }
 
-    public void setPriceRanges(PriceRanges priceRanges) {
+    public void setPriceRanges(List<PriceRange> priceRanges) {
         this.priceRanges = priceRanges;
     }
 
-    public String getCurrency() {
-        return currency;
+    public Links getLinks() {
+        return links;
     }
 
-    public void setCurrency(String currency) {
-        this.currency = currency;
+    public void setLinks(Links links) {
+        this.links = links;
+    }
+
+    public Embedded_ getEmbedded() {
+        return embedded;
+    }
+
+    public void setEmbedded(Embedded_ embedded) {
+        this.embedded = embedded;
     }
 
 }

@@ -15,7 +15,6 @@ import okhttp3.OkHttpClient;
 public class OkHttpClientModule {
 
     @Provides
-    @Singleton
     public OkHttpClient okHttpClient(Cache cache) {
         //HTTP LOGGING INTERCEPTOR
         return new OkHttpClient()
@@ -25,13 +24,11 @@ public class OkHttpClientModule {
     }
 
     @Provides
-    @Singleton
     public Cache cache(File cacheFile) {
         return new Cache(cacheFile, 10 * 1000 * 1000);
     }
 
     @Provides
-    @Singleton
     public File file(Context context) {
         File file = new File(context.getCacheDir(), "HttpCache");
         file.mkdirs();

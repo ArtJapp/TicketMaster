@@ -1,33 +1,43 @@
 
 package mrth.legion.ticketmaster.Models;
 
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Result {
 
-    @SerializedName("events")
+    @SerializedName("_embedded")
     @Expose
-    private List<Event> events = null;
-    @SerializedName("pagination")
+    private Embedded embedded;
+    @SerializedName("_links")
     @Expose
-    private Pagination pagination;
+    private Links___ links;
+    @SerializedName("page")
+    @Expose
+    private Page page;
 
-    public List<Event> getEvents() {
-        return events;
+    public Embedded getEmbedded() {
+        return embedded;
     }
 
-    public void setEvents(List<Event> events) {
-        this.events = events;
+    public void setEmbedded(Embedded embedded) {
+        this.embedded = embedded;
     }
 
-    public Pagination getPagination() {
-        return pagination;
+    public Links___ getLinks() {
+        return links;
     }
 
-    public void setPagination(Pagination pagination) {
-        this.pagination = pagination;
+    public void setLinks(Links___ links) {
+        this.links = links;
+    }
+
+    public Page getPage() {
+        return page;
+    }
+
+    public void setPage(Page page) {
+        this.page = page;
     }
 
 }

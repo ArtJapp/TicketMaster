@@ -6,16 +6,27 @@ import com.google.gson.annotations.SerializedName;
 
 public class Location {
 
-    @SerializedName("address")
+    @SerializedName("longitude")
     @Expose
-    private Address address;
+    private String longitude;
+    @SerializedName("latitude")
+    @Expose
+    private String latitude;
 
-    public Address getAddress() {
-        return address;
+    public String getLongitude() {
+        return longitude;
     }
 
-    public void setAddress(Address address) {
-        this.address = address;
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
     }
 
 }

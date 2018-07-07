@@ -4,7 +4,7 @@ package mrth.legion.ticketmaster.Models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Venue {
+public class Self_ {
 
     @SerializedName("href")
     @Expose
