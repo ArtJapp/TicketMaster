@@ -1,5 +1,6 @@
 package mrth.legion.ticketmaster;
 
+import android.app.Application;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,7 +28,8 @@ public class MainActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                TicketMasterApp.getApi().getEvents("HkgpTs1icsAAqywPmEXoKMullfP8W7he").enqueue(new Callback<Result>() {
+                TicketMasterApp.setCodeCountry("Poland");
+                TicketMasterApp.getApi().getEvents("HkgpTs1icsAAqywPmEXoKMullfP8W7he", TicketMasterApp.getCodeCountry()).enqueue(new Callback<Result>() {
                     @Override
                     public void onResponse(Call<Result> call, Response<Result> response) {
                         try {
@@ -37,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
                                 if(response.body().getEmbedded().getEvents() != null) {
                                     Log.d("Loggy", "Wow events are not empty!");
                                     for (Event x : response.body().getEmbedded().getEvents()) {
-                                        textView.setText(textView.getText() + "       " + x.getName());
+                                        textView.setText(textView.getText() + "\n" + x.getName() + "  ->  " +x.getDates().getStart().getLocalDate());
                                     }
                                 }
                             }

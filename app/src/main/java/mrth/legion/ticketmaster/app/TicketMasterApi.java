@@ -9,5 +9,5 @@ import retrofit2.http.Query;
 
 public interface TicketMasterApi {
     @GET("discovery/v2/events.json")
-    Call<Result> getEvents(@Query("apikey") String apiKey /*, @Query("countryCode") String countryCode */);
+    Call<Result> getEvents(@Query("apikey") String apiKey , @Query("countryCode") String countryCode );
 }
