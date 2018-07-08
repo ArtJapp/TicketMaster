@@ -1,15 +1,13 @@
 package mrth.legion.ticketmaster.app;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-import dagger.Provides;
-
 public class Countries {
     private static HashMap<String, String> countryCodes;
+    private static String currentCountry;
 
     public Countries() {
         countryCodes = new HashMap<>();
@@ -32,6 +30,8 @@ public class Countries {
         countryCodes.put("Switzerland", "CH");
         countryCodes.put("UK", "UK");
         countryCodes.put("USA", "US");
+
+        currentCountry = "USA";
     }
 
     public static String getCode(String country) {
@@ -46,5 +46,17 @@ public class Countries {
         List<String> answer = new ArrayList<>(countryCodes.keySet());
         Collections.sort(answer);
         return answer;
+    }
+
+    public static String getCurrentCode() {
+        return countryCodes.get(currentCountry);
+    }
+
+    public static void setCountry(String country) {
+        currentCountry = country;
+    }
+
+    public static String getCountry() {
+        return currentCountry;
     }
 }

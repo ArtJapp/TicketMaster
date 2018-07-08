@@ -4,58 +4,49 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.Toast;
+
+import com.arellomobile.mvp.MvpAppCompatActivity;
+import com.arellomobile.mvp.presenter.InjectPresenter;
+
+import java.util.List;
 
 import mrth.legion.ticketmaster.R;
 import mrth.legion.ticketmaster.models.Event;
-import mrth.legion.ticketmaster.models.Result;
-import mrth.legion.ticketmaster.app.TicketMasterApp;
-import mrth.legion.ticketmaster.ui.activities.CountriesActivity;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import mrth.legion.ticketmaster.presenters.TicketsPresenter;
+import mrth.legion.ticketmaster.ui.adapters.TicketViewAdapter;
+import mrth.legion.ticketmaster.ui.views.TicketsView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends MvpAppCompatActivity implements TicketsView {
+
+    @InjectPresenter
+    TicketsPresenter presenter;
+
+    private TicketViewAdapter adapter;
+
+    RecyclerView eventList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button btn = findViewById(R.id.btnSearch);
-        final TextView textView = findViewById(R.id.results);
+        Button showEventsButton = findViewById(R.id.btnSearch);
 
-        btn.setOnClickListener(new View.OnClickListener() {
+        eventList = findViewById(R.id.listEvents);
+        adapter = new TicketViewAdapter(this);
+        eventList.setAdapter(adapter);
+        eventList.setLayoutManager(new LinearLayoutManager(this));
+
+        showEventsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                TicketMasterApp.setCodeCountry("Poland");
-                TicketMasterApp.getApi().getEvents("HkgpTs1icsAAqywPmEXoKMullfP8W7he", TicketMasterApp.getCodeCountry()).enqueue(new Callback<Result>() {
-                    @Override
-                    public void onResponse(Call<Result> call, Response<Result> response) {
-                        try {
-                            textView.setText(response.message());
-                            if (response.body() != null) {
-                                Log.d("Loggy", "wow body is not empty");
-                                if(response.body().getEmbedded().getEvents() != null) {
-                                    Log.d("Loggy", "Wow events are not empty!");
-                                    for (Event x : response.body().getEmbedded().getEvents()) {
-                                        textView.setText(textView.getText() + "\n" + x.getName() + "  ->  " +x.getDates().getStart().getLocalDate());
-                                    }
-                                }
-                            }
-                        } catch (NullPointerException e) {
-                            textView.setText(e.toString());
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<Result> call, Throwable t) {
-                        textView.setText("Something wrong ((");
-                    }
-                });
+                presenter.loadResults();
             }
         });
 
@@ -80,4 +71,30 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }//onActivityResult
+
+    @Override
+    public void showEvents(List<Event> events) {
+        adapter.setEvents(events);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showEmpty() {
+        Toast.makeText(this, "Nothing", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void addEvents(List<Event> events) {
+        adapter.setEvents(events);
+    }
+
+    @Override
+    public void onStartLoading() {
+
+    }
+
+    @Override
+    public void onFinishLoading() {
+
+    }
 }

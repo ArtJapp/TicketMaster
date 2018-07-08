@@ -30,6 +30,7 @@ public class TicketMasterModule {
                 .client(okHttpClient)
                 .baseUrl("https://app.ticketmaster.com")
                 .addConverterFactory(gsonConverterFactory)
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
     }
 

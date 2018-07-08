@@ -17,8 +17,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import mrth.legion.ticketmaster.R;
 import mrth.legion.ticketmaster.app.Countries;
-import mrth.legion.ticketmaster.app.TicketMasterApi;
 import mrth.legion.ticketmaster.app.TicketMasterApp;
+import mrth.legion.ticketmaster.ui.adapters.TicketViewAdapter;
 
 public class CountriesActivity extends AppCompatActivity {
 
@@ -32,12 +32,14 @@ public class CountriesActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         String[] v = (String[]) Countries.getListCountries().toArray();
       //  ArrayAdapter ss = new ArrayAdapter(this, android.R.layout.simple_list_item_1, Countries.getListCountries());
+
         country_list.setAdapter(new ArrayAdapter(this, android.R.layout.simple_list_item_1, Countries.getListCountries()));
+
 
         country_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                TicketMasterApp.setCodeCountry(((TextView)view).getText().toString());
+                TicketMasterApp.setCountry(((TextView)view).getText().toString());
                 Intent intent = new Intent();
                 setResult(Activity.RESULT_OK, intent);
                 finish();

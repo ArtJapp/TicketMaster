@@ -2,45 +2,22 @@ package mrth.legion.ticketmaster.presenters;
 
 import android.support.annotation.NonNull;
 
-import java.lang.ref.WeakReference;
+import com.arellomobile.mvp.MvpPresenter;
+import com.arellomobile.mvp.MvpView;
 
-public abstract class BasePresenter<M, V> {
-    protected M model;
-    private WeakReference<V> view;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 
-    public void setModel(M model) {
-        resetState();
-        this.model = model;
-        if (setupDone()) {
-            updateView();
-        }
+
+public class BasePresenter<View extends MvpView> extends MvpPresenter<View> {
+    private CompositeDisposable compositeSubscription = new CompositeDisposable();
+
+    protected void unsubscribeOnDestroy(@NonNull Disposable subscription) {
+        compositeSubscription.add(subscription);
     }
 
-    protected void resetState() {
-    }
-
-    public void bindView(@NonNull V view) {
-        this.view = new WeakReference<>(view);
-        if (setupDone()) {
-            updateView();
-        }
-    }
-
-    public void unbindView() {
-        this.view = null;
-    }
-
-    protected V view() {
-        if (view == null) {
-            return null;
-        } else {
-            return view.get();
-        }
-    }
-
-    protected abstract void updateView();
-
-    protected boolean setupDone() {
-        return view() != null && model != null;
+    @Override public void onDestroy() {
+        super.onDestroy();
+        compositeSubscription.clear();
     }
 }
