@@ -58,6 +58,8 @@ public class TicketViewAdapter extends RecyclerView.Adapter<TicketViewAdapter.Ti
         TextView eventName;
         @BindView(R.id.eventPlace)
         TextView eventPlace;
+        @BindView(R.id.eventCity)
+        TextView eventCity;
         @BindView(R.id.eventTime)
         TextView eventTime;
         @BindView(R.id.eventCategory)
@@ -74,7 +76,11 @@ public class TicketViewAdapter extends RecyclerView.Adapter<TicketViewAdapter.Ti
         public void bindEvent(Event event) {
             eventName.setText(event.getName());
             //    java.lang.NullPointerException: Attempt to invoke virtual method 'java.lang.String mrth.legion.ticketmaster.models.Promoter.getName()' on a null object reference
-            eventPlace.setText(event.getPromoter().getName());
+            String city = event.getEmbedded().getVenues().get(0).getCity().getName();
+            String statecode = event.getEmbedded().getVenues().get(0).getState().getStateCode();
+            eventCity.setText(city + ", " + statecode);
+            String place = event.getEmbedded().getVenues().get(0).getName();
+            eventPlace.setText(place);
             eventTime.setText(event.getDates().getStart().getDateTime());
            // eventCategory.setText(event.getClassifications().get(0).);\
             Log.d("Lol what is it", event.getClassifications().get(0).getSegment().getName());//shows Music for music event
