@@ -22,13 +22,12 @@ public class DetailPresenter extends BasePresenter<DetailView> {
     @Inject
     TMService mService;
 
-    public DetailPresenter(String id) {
+    public DetailPresenter() {
         TicketMasterComponent g =  TicketMasterApp.getTicketMasterComponent();
         mService = TicketMasterApp.getService();
-        loadData(id);
     }
 
-    private void loadData(String id) {
+    public void loadData(String id) {
         final Observable<Event> observable = mService.getDetails(id);
         Disposable subscription = observable
                 .compose(Utils.applySchedulers())

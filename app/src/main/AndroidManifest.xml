@@ -22,6 +22,14 @@
         </activity>
         <activity android:name=".ui.activities.CountriesActivity" >
         </activity>
+
+        <activity android:name=".ui.activities.DetailsActivity"
+            android:parentActivityName=".ui.activities.MainActivity">
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.activities.MainActivity" />
+        </activity>
     </application>
 
 </manifest>
