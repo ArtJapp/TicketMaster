@@ -161,7 +161,6 @@ public class DetailsActivity extends MvpAppCompatActivity implements DetailView{
 
     @Override
     public void showError() {
-        Log.d("DetailActivity", "Lol kek, there is an error");
         Toast.makeText(this, "Some error occurred", Toast.LENGTH_SHORT).show();
     }
 

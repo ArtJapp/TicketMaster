@@ -1,7 +1,5 @@
 package mrth.legion.ticketmaster.presenters;
 
-import android.util.Log;
-
 import com.arellomobile.mvp.InjectViewState;
 
 import java.util.List;
@@ -29,9 +27,7 @@ public class TicketsPresenter extends BasePresenter<TicketsView> {
     public TicketsPresenter() {
         TicketMasterComponent g =  TicketMasterApp.getTicketMasterComponent();
         mService = TicketMasterApp.getService();
-    //    mService = g.getTicketMasterService();
-        //g.inject(this);
-    }
+     }
 
     public String pickCountry(String country) {
         TicketMasterApp.setCountry(country);
@@ -44,30 +40,10 @@ public class TicketsPresenter extends BasePresenter<TicketsView> {
     }
 
     private void loadData(boolean isPageLoading) {
-        Log.d("Loggy", "start getting data");
-        Log.d("Pis", "user request is " );
-
-        Log.d("Pis", "Start subscription");
-
-        /*Subscription subscription = observable
-                .compose(Utils.applySchedulers())
-                .subscribe(repositories -> {
-                    Log.d("Pis", "Success loading");
-                    onLoadingSuccess(isPageLoading, repositories.getItems());
-                }, error -> {
-                    Log.d("Pis", "Failed loading");
-                    error.printStackTrace();
-                    onLoagingFailed(isPageLoading, error);
-                });
-*/
         final Observable<Result> observable = mService.getQuery();
         Disposable subscription = observable
                 .compose(Utils.applySchedulers())
-                .subscribe(items -> {
-                    Log.d("Pis", "Success loading");
-                    onLoadingSuccess(isPageLoading, items.getEmbedded().getEvents());
-                }, error -> {
-                    Log.d("Pis", "Failed loading");
+                .subscribe(items -> onLoadingSuccess(isPageLoading, items.getEmbedded().getEvents()), error -> {
                     error.printStackTrace();
                     onLoagingFailed(isPageLoading, error);
                 });
@@ -80,17 +56,9 @@ public class TicketsPresenter extends BasePresenter<TicketsView> {
     private void onLoadingSuccess( boolean isPageLoading, List<Event> items) {
         if (isPageLoading) {
             getViewState().addEvents(items);
-
-            System.out.println("Easy Beasy");
-            for (Event x : items) {
-                System.out.println("New item " + x.getName());
-            }
         } else {
             getViewState().showEvents(items);
-            System.out.println("Easy Beasy");
-            for (Event x : items) {
-                System.out.println("New item " + x.getName());
-            }
+
         }
     }
     private void onLoagingFailed( boolean isPageLoading, Throwable error) {
