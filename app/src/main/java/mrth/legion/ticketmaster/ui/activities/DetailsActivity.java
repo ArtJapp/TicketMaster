@@ -1,13 +1,19 @@
 package mrth.legion.ticketmaster.ui.activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
@@ -21,6 +27,7 @@ import javax.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import mrth.legion.ticketmaster.R;
+import mrth.legion.ticketmaster.app.Countries;
 import mrth.legion.ticketmaster.app.TicketMasterApp;
 import mrth.legion.ticketmaster.models.Event;
 import mrth.legion.ticketmaster.presenters.DetailPresenter;
@@ -57,6 +64,9 @@ public class DetailsActivity extends MvpAppCompatActivity implements DetailView{
     @BindView(R.id.findTickets)
     Button findTickets;
 
+    @BindView(R.id.tools_bar)
+    Toolbar toolbar;
+
     @Override
     protected void onCreate(@Nullable Bundle savedBundleInstance) {
         super.onCreate(savedBundleInstance);
@@ -67,6 +77,37 @@ public class DetailsActivity extends MvpAppCompatActivity implements DetailView{
         String id = intent.getStringExtra("id");
         presenter.loadData(id);
 
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+    }
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.detail_activity_menu, menu);
+        menu.getItem(0).setTitle(TicketMasterApp.getCountryCode());
+        return true;
+    }
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_micro: {
+                Toast.makeText(this, "Adding to your calendar", Toast.LENGTH_SHORT).show();
+                break;
+            }
+            case R.id.menu_item_share: {
+                Toast.makeText(this, "Sharing event with your friends", Toast.LENGTH_SHORT).show();
+                break;
+            }
+            case android.R.id.home:
+                finish();
+        }
+        return true;
     }
 
     @Override
@@ -118,7 +159,7 @@ public class DetailsActivity extends MvpAppCompatActivity implements DetailView{
     @Override
     public void showError() {
         Log.d("DetailActivity", "Lol kek, there is an error");
-    //    finish();
+        Toast.makeText(this, "Some error occurred", Toast.LENGTH_SHORT).show();
     }
 
     @Override
