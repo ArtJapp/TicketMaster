@@ -11,6 +11,6 @@ public interface TicketMasterApi {
     @GET("discovery/v2/events.json")
     Observable<Result> getEvents(@Query("apikey") String apiKey , @Query("countryCode") String countryCode );
 
-    @GET("discovery/v2/events/{eventId}.json")
-    Observable<Event> getEvent(@Query("apikey") String apiKey , @Path("id") String eventId );
+    @GET("discovery/v2/events/{id}.json")
+    Observable<Event> getEvent( @Path("id") String eventId, @Query("apikey") String apiKey);
 }

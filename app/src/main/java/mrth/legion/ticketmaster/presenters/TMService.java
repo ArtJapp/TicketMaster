@@ -18,6 +18,6 @@ public class TMService {
         return mApi.getEvents(KEY, TicketMasterApp.getCountryCode());
     }
     public Observable<Event> getDetails(String id) {
-        return mApi.getEvent(KEY, id);
+        return mApi.getEvent(id, KEY);
     }
 }
