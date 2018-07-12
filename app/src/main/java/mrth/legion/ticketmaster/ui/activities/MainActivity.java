@@ -1,7 +1,9 @@
 package mrth.legion.ticketmaster.ui.activities;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,6 +22,7 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import java.util.List;
 
 import mrth.legion.ticketmaster.R;
+import mrth.legion.ticketmaster.app.Countries;
 import mrth.legion.ticketmaster.app.TicketMasterApp;
 import mrth.legion.ticketmaster.models.Event;
 import mrth.legion.ticketmaster.presenters.TicketsPresenter;
@@ -40,47 +43,16 @@ public class MainActivity extends MvpAppCompatActivity implements TicketsView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button showEventsButton = findViewById(R.id.btnSearch);
-
         eventList = findViewById(R.id.listEvents);
         adapter = new TicketViewAdapter(this);
         eventList.setAdapter(adapter);
         eventList.setLayoutManager(new LinearLayoutManager(this));
 
-        showEventsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                presenter.loadResults();
-            }
-        });
-
-        Button button = findViewById(R.id.btnCountry);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplication().getApplicationContext(), CountriesActivity.class);
-                startActivityForResult(intent, 1);
-            }
-        });
+        presenter.loadResults();
 
         Toolbar t = findViewById(R.id.tool_bar);
         setSupportActionBar(t);
-        Button b = t.findViewById(R.id.action_pick_country);
-        View customV = getLayoutInflater().inflate(R.layout.toolbar, null);
-        b = customV.findViewById(R.id.action_pick_country);
-        if (b != null) {
-
-            b.setText(TicketMasterApp.getCountryCode());
-            b.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Log.d("blayd", "country change button");
-                }
-            });
-        } else {
-        }
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -90,25 +62,32 @@ public class MainActivity extends MvpAppCompatActivity implements TicketsView {
     }
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_pick_country) {
-            Log.d("CYKE", "it works");
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Choose the country");
 
+            // add a list
+            String[] countryList = new String[Countries.getListCountries().size()];
+            int i = 0;
+            for (String country : Countries.getListCountries()) {
+                countryList[i] = country;
+                i++;
+            }
+
+
+            builder.setItems(countryList, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    String newCode = presenter.pickCountry(countryList[which]);
+                    item.setTitle(newCode);
+                }
+            });
+
+            // create and show the alert dialog
+            AlertDialog dialog = builder.create();
+            dialog.show();
         }
         return true;
     }
-
-
-        @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        if (requestCode == 1) {
-            if(resultCode == Activity.RESULT_OK){
-                Log.d("Loggy", "It's oK");
-            }
-            if (resultCode == Activity.RESULT_CANCELED) {
-                //Write your code if there's no result
-            }
-        }
-    }//onActivityResult
 
     @Override
     public void showEvents(List<Event> events) {
@@ -128,11 +107,12 @@ public class MainActivity extends MvpAppCompatActivity implements TicketsView {
 
     @Override
     public void onStartLoading() {
-
+    //Nothing to do
+        //Должен появиться крутящийся кружок
     }
 
     @Override
     public void onFinishLoading() {
-
+        //Nothing to do
     }
 }

@@ -14,7 +14,10 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -37,8 +40,7 @@ public class TicketViewAdapter extends RecyclerView.Adapter<TicketViewAdapter.Ti
     @Override
     public TicketViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.event_item, parent, false);
-        TicketViewHolder ticketViewHolder = new TicketViewHolder(view);
-        return ticketViewHolder;
+        return new TicketViewHolder(view);
     }
 
     @Override
@@ -53,11 +55,10 @@ public class TicketViewAdapter extends RecyclerView.Adapter<TicketViewAdapter.Ti
 
     public void setEvents(List<Event> events) {
         this.mEvents.clear();
+        this.mEvents = new ArrayList<>();
         this.mEvents.addAll(events);
         notifyDataSetChanged();
     }
-
-
 
     public class TicketViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
@@ -90,20 +91,29 @@ public class TicketViewAdapter extends RecyclerView.Adapter<TicketViewAdapter.Ti
             id = event.getId();
             eventName.setText(event.getName());
             String city = event.getEmbedded().getVenues().get(0).getCity().getName();
-            String statecode = event.getEmbedded().getVenues().get(0).getState().getStateCode();
-            eventCity.setText(city + ", " + statecode);
+            String statecode = event.getEmbedded().getVenues().get(0).getState() == null ? "" : ", " + event.getEmbedded().getVenues().get(0).getState().getStateCode();
+            eventCity.setText(city + statecode);
             String place = event.getEmbedded().getVenues().get(0).getName();
             eventPlace.setText(place);
-            eventTime.setText(event.getDates().getStart().getDateTime());
-           // eventCategory.setText(event.getClassifications().get(0).);\
-            Log.d("Lol what is it", event.getClassifications().get(0).getSegment().getName());//shows Music for music event
+
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+            SimpleDateFormat output = new SimpleDateFormat("dd.MM.yyyy");
+            Date d;
+            try {
+                d = sdf.parse(event.getDates().getStart().getLocalDate());
+                String formattedTime = output.format(d);
+                eventTime.setText(formattedTime);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
             TicketMasterApp.getPicasso().load(event.getImages().get(0).getUrl()).into(imageView);
             try {
                 card.setOnClickListener(this);
             } catch (NullPointerException e) {
                 e.printStackTrace();
-                Log.d("Bletb", "null pointer");
             }
+            eventCategory.setText(event.getClassifications().get(0).getGenre().getName());
         }
 
         @Override

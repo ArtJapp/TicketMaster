@@ -33,6 +33,11 @@ public class TicketsPresenter extends BasePresenter<TicketsView> {
         //g.inject(this);
     }
 
+    public String pickCountry(String country) {
+        TicketMasterApp.setCountry(country);
+        loadResults();
+        return TicketMasterApp.getCountryCode();
+    }
 
     public void loadResults() {
         loadData(false);
@@ -69,40 +74,6 @@ public class TicketsPresenter extends BasePresenter<TicketsView> {
 
 
         unsubscribeOnDestroy(subscription);
-
-//        App.getApi().getData(requestUser, CX, KEY, "image", "medium").enqueue(new Callback<Result>() {
-//            @Override
-//            public void onResponse(Call<Result> call, Response<Result> response) {
-//                if (model != null) {
-//                    model.clear();
-//                    updateView();
-//                }
-//                if (response.body() != null)
-//                {
-//                    Log.d("Loggy","подгрузка начата");
-//                    model = new ArrayList<>();
-//                    Log.d("Loggy", response.body().toString());
-//                    if (Long.parseLong(response.body().getSearchInformation().getTotalResults()) > 0) {
-//                        Log.d("Loggy","Inputing elements");
-//                        model.addAll(response.body().getItems());
-//                    } else {
-//                        Log.d("Loggy","nothing to input");
-//                        view().showEmpty();
-//                    }
-//
-//                    setModel(model);
-//                    Log.d("Loggy","подгрузка закончена");
-//                //    updateView();
-//                    Log.d("Loggy","обновление view закончено");
-//                    updateView();
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<Result> call, Throwable t) {
-//            }
-//        });
-//        Log.d("Loggy", "finish getting component");
 
     }
 
