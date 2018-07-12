@@ -113,6 +113,7 @@ public class TicketViewAdapter extends RecyclerView.Adapter<TicketViewAdapter.Ti
             } catch (NullPointerException e) {
                 e.printStackTrace();
             }
+            eventCategory.setText(event.getClassifications().get(0).getGenre().getName());
         }
 
         @Override

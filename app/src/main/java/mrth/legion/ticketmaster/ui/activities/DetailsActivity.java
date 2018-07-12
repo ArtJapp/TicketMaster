@@ -133,6 +133,9 @@ public class DetailsActivity extends MvpAppCompatActivity implements DetailView{
             time.setText(formattedTime);
         } catch (ParseException e) {
             e.printStackTrace();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            time.setText("");
         }
         if (event.getPromoter() == null) {
             place.setText("");
