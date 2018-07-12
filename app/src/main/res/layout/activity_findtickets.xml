@@ -38,7 +38,7 @@
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="5dp"
             android:layout_marginTop="0dp"
             android:lines="1"
             android:text="Concertik"
@@ -73,8 +73,8 @@
             android:text="sometime"
             android:layout_alignParentLeft="true"
             android:textSize="14sp"
-            android:layout_marginTop="13dp"
-            android:layout_marginBottom="13dp"/>
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"/>
 
         <TextView
             android:id="@+id/time"
@@ -83,8 +83,8 @@
             android:text="sometime"
             android:layout_alignParentRight="true"
             android:textSize="14sp"
-            android:layout_marginTop="13dp"
-            android:layout_marginBottom="13dp"/>
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"/>
 
     </RelativeLayout>
 
@@ -161,14 +161,6 @@
 
 
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/genre"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_toRightOf="@id/name"
-        android:text="hardbass" />
 
     <Button
         android:id="@+id/findTickets"
