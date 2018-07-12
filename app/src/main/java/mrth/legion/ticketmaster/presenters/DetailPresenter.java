@@ -31,11 +31,7 @@ public class DetailPresenter extends BasePresenter<DetailView> {
         final Observable<Event> observable = mService.getDetails(id);
         Disposable subscription = observable
                 .compose(Utils.applySchedulers())
-                .subscribe(item -> {
-                    Log.d("Pis", "Success loading");
-                    onLoadingSuccess(item);
-                }, error -> {
-                    Log.d("Pis", "Failed loading");
+                .subscribe(this::onLoadingSuccess, error -> {
                     error.printStackTrace();
                     onLoadingFailed(error);
                 });

@@ -9,8 +9,6 @@ import io.reactivex.schedulers.Schedulers;
 public class Utils {
 
     public static <T> ObservableTransformer<T, T> applySchedulers() {
-        Log.d("Bleaar", "applying schedulers");
-
         return observable -> observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

@@ -73,7 +73,6 @@ public class MainActivity extends MvpAppCompatActivity implements TicketsView {
                 i++;
             }
 
-
             builder.setItems(countryList, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
