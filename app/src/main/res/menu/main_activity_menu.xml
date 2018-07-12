@@ -5,8 +5,9 @@
     <item
         android:id="@+id/action_pick_country"
         android:title="US"
-        yourapp:showAsAction="always|collapseActionView"
-        yourapp:actionViewClass="android.support.v7.widget.AppCompatButton"
+        android:visible="true"
+        yourapp:showAsAction="ifRoom"
+
         />
 
 </menu>

@@ -1,6 +1,7 @@
 package mrth.legion.ticketmaster.ui.activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,6 +11,10 @@ import android.widget.TextView;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.annotation.Nullable;
 
@@ -44,6 +49,9 @@ public class DetailsActivity extends MvpAppCompatActivity implements DetailView{
     @BindView(R.id.time)
     TextView time;
 
+    @BindView(R.id.date)
+    TextView date;
+
     TextView promoter;
 
     @BindView(R.id.findTickets)
@@ -64,12 +72,46 @@ public class DetailsActivity extends MvpAppCompatActivity implements DetailView{
     @Override
     public void showEvent(Event event) {
         name.setText(event.getName());
-        time.setText(event.getDates().getStart().getLocalDate() +" "+ event.getDates().getStart().getLocalTime());
-//        place.setText(event.getPromoter().getName());
-        prices.setText(event.getPriceRanges().get(0).getMin() +" - " + event.getPriceRanges().get(0).getMax());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat output = new SimpleDateFormat("dd.MM.yyyy");
+        Date d;
+        try {
+            d = sdf.parse(event.getDates().getStart().getLocalDate());
+            String formattedTime = output.format(d);
+            date.setText(formattedTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+         sdf = new SimpleDateFormat("HH:mm:ss");
+         output = new SimpleDateFormat("HH:mm");
+
+        try {
+            d = sdf.parse(event.getDates().getStart().getLocalTime());
+            String formattedTime = output.format(d);
+            time.setText(formattedTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if (event.getPromoter() == null) {
+            place.setText("");
+        } else {
+            place.setText(event.getPromoter().getName());
+        }
+        if (event.getPriceRanges() == null) {
+            prices.setText("Check promoter's site for prices");
+        } else {
+            prices.setText("$" + event.getPriceRanges().get(0).getMin() +" - $" + event.getPriceRanges().get(0).getMax());
+        }
         genre.setText(event.getClassifications().get(0).getGenre().getName());
 //        promoter.setText(event.getPromoters().get(0).getName());
         TicketMasterApp.getPicasso().load(event.getImages().get(0).getUrl()).into(photo);
+
+        findTickets.setOnClickListener(view -> {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(event.getUrl()));
+            startActivity(intent);
+        });
+
         onFinishLoading();
     }
 
